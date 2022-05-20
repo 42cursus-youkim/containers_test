@@ -10,41 +10,45 @@ PURPLE="\e[95m"
 CYAN="\e[96m"
 DGREY="\e[1;90m"
 
-include_path="../"
+include_path="-I../containers"
 srcs="srcs"
 
 CC="clang++"
 CFLAGS="-Wall -Wextra -Werror -std=c++98"
-# CFLAGS+=" -fsanitize=address -g3"
+#CFLAGS+=" -g3" # " -fsanitize=address -g3"
 
 ft_compile_output="/dev/null"
 std_compile_output="/dev/null"
 
 function pheader () {
 printf "${EOC}${BOLD}${DBLUE}\
-# ****************************************************************************** #
-#                                                                                #
-#                                :::   :::   :::                                 #
-#                              :+:+: :+:+:  :+: :+:                              #
-#                            +:+ +:+:+ +:+ +:+                                   #
-#                           +#+  +:+  +#+ +#+ +#+                                #
-#                          +#+       +#+ +#+ #+#                                 #
-#                         #+#       #+# #+# #+#                                  #
-#                        ###       ### ### ###  containers_test                  #
-#                                                                                #
-# ****************************************************************************** #
+# ************************************************************ #
+#                                                              #
+#                       :::   :::   :::                        #
+#                     :+:+: :+:+:  :+: :+:                     #
+#                   +:+ +:+:+ +:+ +:+                          #
+#                  +#+  +:+  +#+ +#+ +#+                       #
+#                 +#+       +#+ +#+ #+#                        #
+#                #+#       #+# #+# #+#                         #
+#               ###       ### ### ###  containers_test         #
+#                                                              #
+# ************************************************************ #
 ${EOC}"
 }
 
 compile () {
 	# 1=file 2=define used {ft/std} 3=output_file 4?=compile_log
 	macro_name=$(echo "USING_${2}" | awk '{ print toupper($0) }')
-	compile_cmd="$CC $CFLAGS -o ${3} -I./$include_path -D ${macro_name} ${1}"
-	if [ -n "$4" ]; then
-		compile_cmd+=" &>${4}"
-	fi
+	compile_cmd="$CC $CFLAGS -o ${3} $include_path -D ${macro_name} ${1}"
+	# if [ -n "$4" ]; then
+	# 	compile_cmd+=" 1>${4}"
+	# fi
 	eval "${compile_cmd}"
-	return $?
+	ret=$?
+	if [[ $ret -ne 0 ]]; then
+		echo "${compile_cmd}"
+	fi
+	return $ret
 }
 
 getEmoji () {
@@ -62,15 +66,15 @@ getYN () {
 	# 1=integer
 	res='';
 	case $1 in
-		0) res="Y";;
-		1) res="N";;
+		0) res="${GREEN}Y${EOC}";;
+		1) res="${GREEN}N${EOC}";;
 	esac
 	printf "${res}"
 }
 
 printRes () {
 	# 1=file 2=compile 3=bin 4=output 5=std_compile
-	printf "%-35s: COMPILE: %s | RET: %s | OUT: %s | STD: [%s]\n" \
+	printf "%-29s: COMP %s | RET %s | OUT %s | STD %s\n" \
 		"$1" "$(getEmoji $2)" "$(getEmoji $3)" "$(getEmoji $4)" "$(getYN $5)"
 }
 
@@ -145,6 +149,7 @@ do_test () {
 	for file in ${test_files[@]}; do
 		cmp_one "${file}"
 	done
+	wait
 }
 
 function main () {

@@ -1,0 +1,22 @@
+==686731== Memcheck, a memory error detector
+==686731== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==686731== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==686731== Command: ./erase.out
+==686731== Parent PID: 686721
+==686731== 
+==686731== 
+==686731== HEAP SUMMARY:
+==686731==     in use at exit: 1,152 bytes in 16 blocks
+==686731==   total heap usage: 29 allocs, 13 frees, 75,512 bytes allocated
+==686731== 
+==686731== 72 bytes in 1 blocks are definitely lost in loss record 6 of 8
+==686731==    at 0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==686731==    by 0x10C3CC: __gnu_cxx::new_allocator<ft::rb_node<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >::allocate(unsigned long, void const*) (in /home/scarf/Repo/containers/_containers_test/erase.out)
+==686731==    by 0x10CA2F: ft::rbtree<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, ft::map<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::less<int>, std::allocator<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >::value_compare>::create_node(ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > const&) (in /home/scarf/Repo/containers/_containers_test/erase.out)
+==686731==    by 0x10C71D: ft::rbtree<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, ft::map<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::less<int>, std::allocator<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >::value_compare>::insert(ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > const&) (in /home/scarf/Repo/containers/_containers_test/erase.out)
+==686731==    by 0x10E6D7: ft::map<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::less<int>, std::allocator<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >::insert(ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > const&) (in /home/scarf/Repo/containers/_containers_test/erase.out)
+==686731==    by 0x10B85D: ft::map<int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::less<int>, std::allocator<ft::pair<int const, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >::operator[](int const&) (in /home/scarf/Repo/containers/_containers_test/erase.out)
+==686731==    by 0x10A890: main (in /home/scarf/Repo/containers/_containers_test/erase.out)
+==686731== 
+==686731== 
+==686731== Exit program on first error (--exit-on-first-error=yes)
