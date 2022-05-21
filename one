@@ -10,5 +10,12 @@ source fct.sh
 testedNamespace=$([[ -z "$2" ]] && echo "ft" || echo "$2")
 output_file="a.out"
 
-compile srcs/"$1" "${testedNamespace}" "${output_file}" \
-	&& colour-valgrind ./${output_file}
+compile "$1" "${testedNamespace}" "${output_file}" \
+	&& colour-valgrind \
+		--memcheck:leak-check=full \
+		--show-reachable=yes \
+		--show-leak-kinds=all \
+		--track-origins=yes \
+		--suppressions=$HOME/supp_mac.txt \
+		--suppressions=$HOME/supp.txt \
+		./${output_file}
